@@ -43,10 +43,12 @@ class CheckResultView(View):
     def get(self, request, task_id):
     # Retrieving the task result using the task_id
       result = AsyncResult(task_id)
+    #   print("Ready: ", result.ready())
+    #   print("Successful: ", result.successful())
+    #   print("Failed: ", result.failed())
       context = {'result':result}
       return render(request, self.template_name, context)
         
-    
 class AboutView(TemplateView):
     template_name = 'fishta/about.html'
     
