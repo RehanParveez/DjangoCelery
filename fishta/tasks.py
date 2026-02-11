@@ -2,6 +2,10 @@ from celery import shared_task
 from time import sleep
 from django_celery_beat.models import PeriodicTask, IntervalSchedule
 import json
+from django.contrib.sessions.models import Session
+from django.utils import timezone
+from django.core.mail import send_mail
+from django.contrib.auth.models import User
 
 @shared_task
 def calculate_task(a, b):
@@ -21,10 +25,10 @@ def factorial_task(n):
     print(f"factorial of {n} is {result}")
     return result
 
-@shared_task
-def clear_session_cache(id):
-    print(f'session cache is cleared:{id}')
-    return id
+# @shared_task
+# def clear_session_cache(id):
+#     print(f'session cache is cleared:{id}')
+#     return id
 
 @shared_task
 def clear_redis_data(key):
@@ -41,4 +45,46 @@ schedule, created = IntervalSchedule.objects.get_or_create(every=25, period=Inte
 
 # scheduling the periodic task by program
 PeriodicTask.objects.get_or_create(name='Clear RabbitMQ Periodic Task', task='fishta.tasks.clear_rabbitmq_data', interval=schedule, args=json.dumps(['hello'])), # passing the arguments to the task as a JSON-encoded list
- 
+
+
+# email sending task with the console emailbackend
+
+# @shared_task
+# def send_email():
+#     send_mail(
+#         subject = 'testing email from django celery',
+#         message = 'this is test email being carried out by celery periodic task',
+#         from_email=None,
+#         recipient_list=["test@email.com"],
+#         fail_silently=False)
+    
+#     print('email is sent successfully')
+#     return 'email sent'
+
+
+# smtp related task 
+
+@shared_task
+def send_email_smtp(subject="hello", message='this is a test email with the SMTP use'):
+    recipient_list = list(User.objects.values_list('email', flat=True))
+
+    if recipient_list:
+        send_mail(subject=subject, message=message, from_email='rehanrural@gmail.com', recipient_list=recipient_list,
+            fail_silently=False)
+        print(f'email is sent {recipient_list}')
+        return f'email sent to {recipient_list}'
+    else:
+        print('no users found')
+        return 'no recipients'
+
+@shared_task
+def clear_session_cache():
+    count = 0
+    
+    for session in Session.objects.all():
+        if session.expire_date < timezone.now():
+            session.delete()
+            count += 1
+            
+    print(f'{count} the expired sessions are cleared')
+    return f'{count} sessions are cleared'

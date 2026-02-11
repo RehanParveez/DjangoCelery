@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -129,13 +130,40 @@ CELERY_TIMEZONE = "Asia/Karachi"
 CELERY_RESULT_EXTENDED = True
 
 # # Method 1
-CELERY_BEAT_SCHEDULE = {
-    'every-15-seconds':{
-        'task':'fishta.tasks.clear_session_cache',
-        'schedule':10,
-        'args':('11111', )
-    }
-    # if want to add the more periodic tasks as needed
-}
+# CELERY_BEAT_SCHEDULE = {
+#     'every-15-seconds':{
+#         'task':'fishta.tasks.clear_session_cache',
+#         'schedule':10,
+#         'args':('11111', )
+#     }
+#     # if want to add the more periodic tasks as needed
+# }
+
+# clearing email session and sending test email
+## commented bcz for now will handle the periodic tasks from the admin only
+# CELERY_BEAT_SCHEDULE = {
+#     'clear-expired-sessions-every-25-seconds':{
+#     'task': 'fishta.tasks.clear_session_cache',
+#     'schedule':timedelta(seconds=25),
+#     },
+#     'send-test-email-every-50-seconds': {
+#         'task':'fishta.tasks.send_email',
+#         'schedule':timedelta(seconds=50),
+#     },
+# }
 
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+# simple console emailbackend handling
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# DEFAULT_FROM_EMAIL = 'rehan@email.com'
+
+
+# SMTP server details (example for Gmail)
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'rehanrural@gmail.com'    
+EMAIL_HOST_PASSWORD = 'fsxdvkynuukaojew'    
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
