@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_celery_results',
     'fishta',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -123,3 +124,18 @@ CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
 # CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/1"
 CELERY_RESULT_BACKEND = "django-db"
 CELERY_TIMEZONE = "Asia/Karachi"
+
+# enabling the extended task result attributes like(name, args, kwargs, worker, retries, queue, delivery-info) to be written to backend
+CELERY_RESULT_EXTENDED = True
+
+# # Method 1
+CELERY_BEAT_SCHEDULE = {
+    'every-15-seconds':{
+        'task':'fishta.tasks.clear_session_cache',
+        'schedule':10,
+        'args':('11111', )
+    }
+    # if want to add the more periodic tasks as needed
+}
+
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import View ,TemplateView
-from fishta.tasks import subtract, calculate_task, factorial_task
+from fishta.tasks import calculate_task
+# factorial_task
 from celery.result import AsyncResult
 # Create your views here.
 
@@ -34,7 +35,7 @@ from celery.result import AsyncResult
 class HomeView(View):
     def get(self, request):
         print('Results: ')
-        result = subtract.delay(50, 15)
+        result = calculate_task.delay(50, 15)
         return render(request, 'fishta/home.html', {'result':result})
     
 class CheckResultView(View):
