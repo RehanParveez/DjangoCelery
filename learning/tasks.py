@@ -40,11 +40,11 @@ def clear_rabbitmq_data(key):
     print(f'RabbitMQ data cleared: {key}')
     return key
 
-# creating schedule every 25 seconds
-schedule, created = IntervalSchedule.objects.get_or_create(every=25, period=IntervalSchedule.SECONDS)
+# # creating schedule every 25 seconds
+# schedule, created = IntervalSchedule.objects.get_or_create(every=25, period=IntervalSchedule.SECONDS)
 
-# scheduling the periodic task by program
-PeriodicTask.objects.get_or_create(name='Clear RabbitMQ Periodic Task', task='fishta.tasks.clear_rabbitmq_data', interval=schedule, args=json.dumps(['hello'])), # passing the arguments to the task as a JSON-encoded list
+# # scheduling the periodic task by program
+# PeriodicTask.objects.get_or_create(name='Clear RabbitMQ Periodic Task', task='learning.tasks.clear_rabbitmq_data', interval=schedule, args=json.dumps(['hello'])), # passing the arguments to the task as a JSON-encoded list
 
 
 # email sending task with the console emailbackend

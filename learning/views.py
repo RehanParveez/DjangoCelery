@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import View ,TemplateView
-from fishta.tasks import calculate_task
+from learning.tasks import calculate_task
 # factorial_task
 from celery.result import AsyncResult
 # Create your views here.
@@ -16,7 +16,7 @@ from celery.result import AsyncResult
 #       print("Result2:", result2)
 #       result3 = factorial_task.delay(9)
 #       print("Result3:", result3)
-#       return render(request, 'fishta/home.html')
+#       return render(request, 'learning/home.html')
   
 # enqueuing the task using the apply_async()
 # class HomeView(View):
@@ -29,17 +29,17 @@ from celery.result import AsyncResult
 #       print("Result2:", result2)
 #       result3 = factorial_task.delay(9)
 #       print("Result3:", result3)
-#       return render(request, 'fishta/home.html')
+#       return render(request, 'learning/home.html')
   
 # displaying the subtract value after the task execution
 class HomeView(View):
     def get(self, request):
         print('Results: ')
         result = calculate_task.delay(50, 15)
-        return render(request, 'fishta/home.html', {'result':result})
+        return render(request, 'learning/home.html', {'result':result})
     
 class CheckResultView(View):
-    template_name = 'fishta/result.html'
+    template_name = 'learning/result.html'
     
     def get(self, request, task_id):
     # Retrieving the task result using the task_id
@@ -51,9 +51,9 @@ class CheckResultView(View):
       return render(request, self.template_name, context)
         
 class AboutView(TemplateView):
-    template_name = 'fishta/about.html'
+    template_name = 'learning/about.html'
     
 class ContactView(TemplateView):
-    template_name = 'fishta/contact.html'
+    template_name = 'learning/contact.html'
     
     

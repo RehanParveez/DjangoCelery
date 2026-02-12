@@ -26,7 +26,7 @@ def subtract(a, b):
 # # other method
 # app.conf.beat_schedule = {
 #     'every-8-seconds':{
-#         'task':'fishta.tasks.clear_session_cache',
+#         'task':'learning.tasks.clear_session_cache',
 #         'schedule':8,
 #         'args':('11111', )
 #     }
@@ -36,7 +36,7 @@ def subtract(a, b):
 # # # other method 
 # app.conf.beat_schedule = {
 #     'every-9-seconds':{
-#         'task':'fishta.tasks.clear_session_cache',
+#         'task':'learning.tasks.clear_session_cache',
 #         'schedule':timedelta(seconds=9),
 #         'args':('11111', )
 #     }
@@ -46,7 +46,7 @@ def subtract(a, b):
 # # the method using the timedelta 
 app.conf.beat_schedule = {
     'every-9-seconds':{
-        'task':'fishta.tasks.clear_session_cache',
+        'task':'learning.tasks.clear_session_cache',
         'schedule':crontab(minute='*/1'),
         'args':('11111', )
     }

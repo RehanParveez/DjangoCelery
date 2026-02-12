@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_celery_results',
-    'fishta',
+    'learning',
     'django_celery_beat',
 ]
 
@@ -132,7 +132,7 @@ CELERY_RESULT_EXTENDED = True
 # # Method 1
 # CELERY_BEAT_SCHEDULE = {
 #     'every-15-seconds':{
-#         'task':'fishta.tasks.clear_session_cache',
+#         'task':'learning.tasks.clear_session_cache',
 #         'schedule':10,
 #         'args':('11111', )
 #     }
@@ -143,11 +143,11 @@ CELERY_RESULT_EXTENDED = True
 ## commented bcz for now will handle the periodic tasks from the admin only
 # CELERY_BEAT_SCHEDULE = {
 #     'clear-expired-sessions-every-25-seconds':{
-#     'task': 'fishta.tasks.clear_session_cache',
+#     'task': 'learning.tasks.clear_session_cache',
 #     'schedule':timedelta(seconds=25),
 #     },
 #     'send-test-email-every-50-seconds': {
-#         'task':'fishta.tasks.send_email',
+#         'task':'learning.tasks.send_email',
 #         'schedule':timedelta(seconds=50),
 #     },
 # }

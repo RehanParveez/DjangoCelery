@@ -1,5 +1,5 @@
 from django.contrib import admin
-from fishta.models import Profile
+from learning.models import Profile
 
 # Register your models here.
 @admin.register(Profile)

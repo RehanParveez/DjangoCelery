@@ -1,5 +1,5 @@
 from django.urls import path
-from fishta.views import HomeView, AboutView, ContactView, CheckResultView
+from learning.views import HomeView, AboutView, ContactView, CheckResultView
 
 urlpatterns = [
     path('home/', HomeView.as_view(), name='home'),

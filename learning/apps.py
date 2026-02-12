@@ -1,9 +1,9 @@
 from django.apps import AppConfig
 
-class FishtaConfig(AppConfig):
+class learningConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = 'fishta'
+    name = 'learning'
     
     def ready(self):
         # Importing the signals
-        import fishta.signals
+        import learning.signals
